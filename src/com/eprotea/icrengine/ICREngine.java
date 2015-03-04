@@ -1,13 +1,10 @@
 package com.eprotea.icrengine;
 
-import java.io.File;
 
 public class ICREngine {
 	static {
 		try {
-			String os = System.getProperty("os.name");
-			String filename = os.startsWith("Windows") ? "icrengine.dll" : "libextracticr.so";
-			System.load(new File("bin/" + filename).getAbsolutePath());
+			NativeUtils.loadLibraries();
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
