@@ -5,7 +5,9 @@ import java.io.File;
 public class ICREngine {
 	static {
 		try {
-			System.load(new File("libextracticr.so").getAbsolutePath());
+			String os = System.getProperty("os.name");
+			String filename = os.startsWith("Windows") ? "icrengine.dll" : "libextracticr.so";
+			System.load(new File("bin/" + filename).getAbsolutePath());
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
