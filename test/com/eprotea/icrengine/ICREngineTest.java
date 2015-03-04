@@ -19,14 +19,14 @@ public class ICREngineTest {
 		ICREngine.loadModels("models");
 		ICREngine engine = new ICREngine();
 		try {
-			File currentDir = new File(".");
-			for (String file : currentDir.list()) {
-				if (!file.endsWith(".jpeg")) {
+			File currentDir = new File("D:\\s\\ValidChq");
+			for (File file : currentDir.listFiles()) {
+				if (!file.getName().endsWith(".jpeg")) {
 					continue;
 				}
-				byte[] chqImg = loadContentFile(file);
+				byte[] chqImg = loadContentFile(file.getAbsolutePath());
 				Result result = engine.predictCA(chqImg);
-				System.out.println(result.getAmount());
+				System.out.format("%s %,.2f %,.2f\n",file.getName().toString(), result.getAmount(), result.getConfidence());
 				
 			}
 		} catch (Exception e) {
