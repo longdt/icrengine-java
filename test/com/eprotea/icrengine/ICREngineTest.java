@@ -34,7 +34,7 @@ public class ICREngineTest {
 		}
 	}
 
-	private static byte[] loadContentFile(String file) throws IOException {
+	public static byte[] loadContentFile(String file) throws IOException {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		BufferedInputStream in = null;
 		try {
