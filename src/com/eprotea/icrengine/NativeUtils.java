@@ -15,6 +15,19 @@ public class NativeUtils {
 			loadLinuxLibs();
 		}
 	}
+	
+	public static void loadLibraries(String module) {
+		if (windows) {
+			loadWindowsLibs(module);
+		} else {
+			loadLinuxLibs(module);
+		}
+	}
+
+	private static void loadWindowsLibs(String module) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	private static void loadWindowsLibs() {
 		String[] dependencies = new String[] { "opencv/opencv_core2410.dll",
@@ -28,7 +41,11 @@ public class NativeUtils {
 				+ ".dll").getAbsolutePath());
 	}
 
+	private static void loadLinuxLibs(String module) {
+		System.load(new File("native_libs/linux/" + arch + "/lib" + module
+				+ ".so").getAbsolutePath());
+	}
+	
 	private static void loadLinuxLibs() {
 	}
-
 }
