@@ -4,12 +4,16 @@ package com.eprotea.icrengine;
 public class ICREngine {
 	static {
 		try {
-			NativeUtils.loadLibraries();
+			NativeUtils.loadLibraries("icrengine");
 		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
 	
+	/**
+	 * load models. This method need call only one time
+	 * @param modelsFolder
+	 */
 	public static native void loadModels(String modelsFolder);
 	
 	public Result predictCA(byte[] chqImg) {

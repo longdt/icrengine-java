@@ -1,51 +1,43 @@
 package com.eprotea.icrengine;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public class NativeUtils {
-	private static String os = System.getProperty("os.name").toLowerCase();
-	private static boolean windows = os.startsWith("windows");
-	private static String LIBRARY_NAME = "icrengine";
-	private static String arch = System.getProperty("os.arch");
+	private static final String os = System.getProperty("os.name")
+			.toLowerCase();
+	private static final boolean windows = os.startsWith("windows");
+	private static final String osType = windows ? "windows" : "linux";
+	private static final String arch = System.getProperty("os.arch");
+	private static final Map<String, String[]> WINDOWS_DEPS;
+	private static final Map<String, String[]> LINUX_DEPS;
 
-	public static void loadLibraries() {
-		if (windows) {
-			loadWindowsLibs();
-		} else {
-			loadLinuxLibs();
-		}
+	static {
+		WINDOWS_DEPS = new HashMap<String, String[]>();
+		WINDOWS_DEPS.put("uvanalyzer", new String[] {
+				"opencv/opencv_core2410.dll", "opencv/opencv_highgui2410.dll",
+				"opencv/opencv_imgproc2410.dll", "uvanalyzer.dll" });
+		WINDOWS_DEPS.put("icrengine",
+				new String[] { "opencv/opencv_core2410.dll",
+						"opencv/opencv_highgui2410.dll",
+						"opencv/opencv_imgproc2410.dll", "tbb/tbb.dll",
+						"icrengine.dll" });
+
+		LINUX_DEPS = new HashMap<String, String[]>();
+		LINUX_DEPS.put("uvanalyzer", new String[] { "libuvanalyzer.so" });
+		LINUX_DEPS.put("icrengine", new String[] { "libicrengine.so" });
 	}
-	
+
 	public static void loadLibraries(String module) {
-		if (windows) {
-			loadWindowsLibs(module);
-		} else {
-			loadLinuxLibs(module);
+		Map<String, String[]> deps = windows ? WINDOWS_DEPS : LINUX_DEPS;
+		loadLibraries(deps.get(module));
+	}
+
+	private static void loadLibraries(String[] libs) {
+		for (String lib : libs) {
+			System.load(new File("native_libs/" + osType + "/" + arch + "/"
+					+ lib).getAbsolutePath());
 		}
-	}
-
-	private static void loadWindowsLibs(String module) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	private static void loadWindowsLibs() {
-		String[] dependencies = new String[] { "opencv/opencv_core2410.dll",
-				"opencv/opencv_highgui2410.dll",
-				"opencv/opencv_imgproc2410.dll", "tbb/tbb.dll" };
-		for (String dependlib : dependencies) {
-			System.load(new File("native_libs/windows/" + arch + "/"
-					+ dependlib).getAbsolutePath());
-		}
-		System.load(new File("native_libs/windows/" + arch + "/" + LIBRARY_NAME
-				+ ".dll").getAbsolutePath());
-	}
-
-	private static void loadLinuxLibs(String module) {
-		System.load(new File("native_libs/linux/" + arch + "/lib" + module
-				+ ".so").getAbsolutePath());
-	}
-	
-	private static void loadLinuxLibs() {
 	}
 }
