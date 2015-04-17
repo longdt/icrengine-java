@@ -18,19 +18,21 @@ public class ICREngineTest {
 	public void testPredictCA() throws IOException {
 		ICREngine.loadModels("models");
 		ICREngine engine = new ICREngine();
-		try {
-			File currentDir = new File("D:\\s\\ValidChq");
-			for (File file : currentDir.listFiles()) {
-				if (!file.getName().endsWith(".jpeg")) {
-					continue;
-				}
+		File currentDir = new File("/home/thienlong/cheque/imgs");
+		for (File file : currentDir.listFiles()) {
+			// if (!file.getName().endsWith(".jpeg")) {
+			// continue;
+			// }
+			try {
 				byte[] chqImg = loadContentFile(file.getAbsolutePath());
 				Result result = engine.predictCA(chqImg);
-				System.out.format("%s %,.2f %,.2f\n",file.getName().toString(), result.getAmount(), result.getConfidence());
-				
+				System.out.format("%s %,.2f %,.2f\n",
+						file.getName().toString(), result.getAmount(),
+						result.getConfidence());
+
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

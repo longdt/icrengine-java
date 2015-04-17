@@ -16,11 +16,11 @@ public class ICREngine {
 	 */
 	public static native void loadModels(String modelsFolder);
 	
-	public Result predictCA(byte[] chqImg) {
+	public Result predictCA(byte[] chqImg) throws ICRException {
 		double[] output = new double[2];
 		predictCA(chqImg, output);
 		return new Result(output[0], output[1]);
 	}
 	
-	private native void predictCA(byte[] chqImg, double[] output);
+	private native void predictCA(byte[] chqImg, double[] output) throws ICRException;
 }
