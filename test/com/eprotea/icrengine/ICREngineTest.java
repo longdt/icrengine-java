@@ -10,12 +10,12 @@ import org.junit.Test;
 
 public class ICREngineTest {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ICRException {
 		new ICREngineTest().testPredictCA();
 	}
 
 	@Test
-	public void testPredictCA() throws IOException {
+	public void testPredictCA() throws IOException, ICRException {
 		ICREngine.loadModels("models");
 		ICREngine engine = new ICREngine();
 		File currentDir = new File("/home/thienlong/cheque/imgs");

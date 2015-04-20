@@ -14,7 +14,7 @@ public class ICREngine {
 	 * load models. This method need call only one time
 	 * @param modelsFolder
 	 */
-	public static native void loadModels(String modelsFolder);
+	public static native void loadModels(String modelsFolder) throws ICRException;
 	
 	public Result predictCA(byte[] chqImg) throws ICRException {
 		double[] output = new double[2];
