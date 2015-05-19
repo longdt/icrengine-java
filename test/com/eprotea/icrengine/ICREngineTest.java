@@ -17,16 +17,16 @@ public class ICREngineTest {
 	@Test
 	public void testPredictCA() throws IOException, ICRException {
 		ICREngine.loadModels("models");
-		ICREngine engine = new ICREngine();
-		File currentDir = new File("/home/thienlong/cheque/imgs");
+		ICREngine engine = new ICREngine(ICREngine.CHEQUE_PH);
+		File currentDir = new File("/home/thienlong/PH CHQ EX");
 		for (File file : currentDir.listFiles()) {
-			// if (!file.getName().endsWith(".jpeg")) {
-			// continue;
-			// }
+			 if (!file.getName().endsWith(".TIF")) {
+			 continue;
+			 }
 			try {
 				byte[] chqImg = loadContentFile(file.getAbsolutePath());
 				Result result = engine.predictCA(chqImg);
-				System.out.format("%s %,.2f %,.2f\n",
+				System.out.format("%s %,.2f %f\n",
 						file.getName().toString(), result.getAmount(),
 						result.getConfidence());
 
